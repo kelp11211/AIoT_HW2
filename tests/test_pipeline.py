@@ -81,4 +81,33 @@ def test_gate2_preprocessor_pipeline():
     assert not np.isnan(X_train_trans).any()
     assert not np.isnan(X_test_trans).any()
 
+def test_gate3_feature_selector():
+    """Verify SelectKBest correctly selects top k features without error."""
+    from src.feature_selection import get_feature_selector
+    selector = get_feature_selector(k=2)
+    X = np.random.RandomState(42).randn(50, 5)
+    y = X[:, 0] * 3.0 + X[:, 1] * 2.0 + np.random.RandomState(42).randn(50) * 0.1
+    X_selected = selector.fit_transform(X, y)
+    assert X_selected.shape == (50, 2)
+    assert selector.get_support().sum() == 2
+
+def test_gate3_modeling_pipelines():
+    """Verify all model pipelines (linear, ridge, lasso, dummy) train and predict cleanly."""
+    from src.modeling import build_pipeline
+    from src.preprocessing import build_preprocessor
+    df_train = pd.DataFrame({
+        "num1": np.linspace(0, 10, 60),
+        "num2": np.linspace(10, 20, 60),
+    })
+    y_train = df_train["num1"] * 2.0 + df_train["num2"] * 0.5 + 1.0
+
+    preprocessor = build_preprocessor(num_cols=["num1", "num2"])
+    for m_type in ["dummy", "linear", "ridge", "lasso"]:
+        pipe = build_pipeline(preprocessor, model_type=m_type)
+        pipe.fit(df_train, y_train)
+        preds = pipe.predict(df_train)
+        assert len(preds) == len(df_train)
+        assert not np.isnan(preds).any()
+
+
 

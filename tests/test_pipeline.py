@@ -142,6 +142,38 @@ def test_gate4_regression_metrics():
     assert metrics["R2"] == 1.0
     assert metrics["Adjusted_R2"] == 1.0
 
+def test_gate5_ssrf_protection():
+    """Verify load_external_csv rejects internal and private IP addresses (SSRF defense)."""
+    import pytest
+    from src.data_loader import load_external_csv
+    
+    with pytest.raises(ValueError, match="private network"):
+        load_external_csv("http://localhost:8080/secret.csv")
+    
+    with pytest.raises(ValueError, match="private network"):
+        load_external_csv("http://127.0.0.1:5000/data.csv")
+
+    with pytest.raises(ValueError, match="private network"):
+        load_external_csv("http://192.168.1.1/data.csv")
+
+def test_gate5_external_csv_local_load(tmp_path):
+    """Verify load_external_csv correctly parses valid local CSV."""
+    from src.data_loader import load_external_csv
+    temp_csv = tmp_path / "test_data.csv"
+    df_temp = pd.DataFrame({
+        "f1": [1, 2, 3, 4, 5],
+        "f2": ["A", "B", "A", "B", "A"],
+        "target_col": [10.0, 20.0, 30.0, 40.0, 50.0]
+    })
+    df_temp.to_csv(temp_csv, index=False)
+    
+    df_loaded, target, feats, nums, cats = load_external_csv(str(temp_csv), target_col="target_col")
+    assert len(df_loaded) == 5
+    assert target == "target_col"
+    assert "f1" in nums
+    assert "f2" in cats
+
+
 
 
 

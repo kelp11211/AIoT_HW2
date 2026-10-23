@@ -40,10 +40,13 @@ Thumbs.db
 desktop.ini
 
 # Large dataset files (>100MB cannot be pushed to GitHub)
-data/**/*.csv
+data/**/train.csv
+data/**/train.csv.zip
 data/**/*.zip
 *.csv.zip
 !data/README.md
+!data/**/demo_sample.csv
+
 
 # Saved models & large binary artifacts
 *.joblib

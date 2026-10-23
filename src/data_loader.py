@@ -55,9 +55,15 @@ def load_dataset(
     if sample_n and sample_n < len(df):
         df = df.sample(n=sample_n, random_state=random_state).reset_index(drop=True)
 
+    if dataset_name == "insurance" and "Policy Start Date" in df.columns:
+        # Parse date to numerical year to avoid 50,000+ sparse dummy columns
+        df["Policy Start Year"] = pd.to_datetime(df["Policy Start Date"], errors="coerce").dt.year.fillna(2022).astype(int)
+        df = df.drop(columns=["Policy Start Date"])
+
     target_col = config["target"]
     excluded = config["id_cols"] + [target_col]
     feature_cols = [c for c in df.columns if c not in excluded]
+
 
     num_cols = df[feature_cols].select_dtypes(include=[np.number]).columns.tolist()
     cat_cols = df[feature_cols].select_dtypes(exclude=[np.number]).columns.tolist()

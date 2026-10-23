@@ -1,0 +1,2 @@
+Dataset,Model,Features_Raw,Test_MAE,Test_MSE,Test_RMSE,Test_R2
+Insurance Premium (s4e12),LinearRegression (ColumnTransformer),19,664.83,740920.39,860.77,0.0029

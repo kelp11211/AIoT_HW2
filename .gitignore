@@ -1,0 +1,53 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & notebooks
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large dataset files (>100MB cannot be pushed to GitHub)
+data/**/*.csv
+data/**/*.zip
+*.csv.zip
+!data/README.md
+
+# Saved models & large binary artifacts
+*.joblib
+*.pkl
+
+# Legacy scratch directory
+8114056002_hw2_old/

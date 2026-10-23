@@ -109,5 +109,39 @@ def test_gate3_modeling_pipelines():
         assert len(preds) == len(df_train)
         assert not np.isnan(preds).any()
 
+def test_gate4_conformal_predictor():
+    """Verify SplitConformalPredictor calculates calibrated intervals and valid coverage."""
+    from src.intervals import SplitConformalPredictor
+    predictor = SplitConformalPredictor(alpha=0.05)
+    
+    # Generate calibrated synthetic data
+    rng = np.random.RandomState(42)
+    y_cal_true = rng.randn(1000)
+    y_cal_pred = y_cal_true + rng.normal(0, 0.1, size=1000)
+    
+    predictor.calibrate(y_cal_true, y_cal_pred)
+    assert predictor.q_hat is not None
+    assert predictor.q_hat > 0
+
+    # Test coverage
+    y_test_true = rng.randn(500)
+    y_test_pred = y_test_true + rng.normal(0, 0.1, size=500)
+    summary = predictor.evaluate_coverage(y_test_true, y_test_pred)
+    assert 0.90 <= summary["empirical_coverage"] <= 1.0
+    assert np.isclose(summary["average_width"], 2 * predictor.q_hat)
+
+
+def test_gate4_regression_metrics():
+    """Verify regression metrics calculation on exact synthetic data."""
+    from src.evaluation import compute_regression_metrics
+    y_true = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+    y_pred = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+    metrics = compute_regression_metrics(y_true, y_pred, n_features=2)
+    assert metrics["MSE"] == 0.0
+    assert metrics["RMSE"] == 0.0
+    assert metrics["R2"] == 1.0
+    assert metrics["Adjusted_R2"] == 1.0
+
+
 
 

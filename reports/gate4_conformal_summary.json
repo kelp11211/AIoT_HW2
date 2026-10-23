@@ -1,0 +1,7 @@
+{
+  "target_coverage": 0.95,
+  "empirical_coverage": 0.9476591291280547,
+  "average_width": 0.08011666452269238,
+  "quantile_q_hat": 0.0400583322613462,
+  "calibration_samples": 178873
+}

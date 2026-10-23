@@ -1,0 +1,6 @@
+Model Name,Features Count,Test_MAE,Test_MSE,Test_RMSE,Test_R2,Adjusted_R2
+Baseline (Dummy Mean),0,0.040892,0.002599,0.050983,-0.0,-0.0
+Linear Regression (All 20),20,0.01578,0.000403,0.020081,0.844868,0.844854
+Linear Regression (Top 15),15,0.026109,0.001051,0.032415,0.595768,0.595741
+Ridge Regression (L2),20,0.015788,0.000403,0.020081,0.844856,0.844843
+Lasso Regression (L1),20,0.015825,0.000403,0.020085,0.844801,0.844787

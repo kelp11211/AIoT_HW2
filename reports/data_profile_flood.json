@@ -1,0 +1,53 @@
+{
+  "dataset": "Flood Prediction (s4e5)",
+  "total_rows": 1117957,
+  "total_features": 20,
+  "numerical_features": [
+    "MonsoonIntensity",
+    "TopographyDrainage",
+    "RiverManagement",
+    "Deforestation",
+    "Urbanization",
+    "ClimateChange",
+    "DamsQuality",
+    "Siltation",
+    "AgriculturalPractices",
+    "Encroachments",
+    "IneffectiveDisasterPreparedness",
+    "DrainageSystems",
+    "CoastalVulnerability",
+    "Landslides",
+    "Watersheds",
+    "DeterioratingInfrastructure",
+    "PopulationScore",
+    "WetlandLoss",
+    "InadequatePlanning",
+    "PoliticalFactors"
+  ],
+  "categorical_features": [],
+  "missing_values": 0,
+  "duplicate_rows": 0,
+  "target_summary": {
+    "mean": 0.5044803243774135,
+    "std": 0.05102609532324065,
+    "min": 0.285,
+    "25%": 0.47,
+    "50%": 0.505,
+    "75%": 0.54,
+    "max": 0.725,
+    "skewness": 0.047225586286401715,
+    "kurtosis": -0.0396087796663249
+  },
+  "vif_summary": {
+    "max_vif": 1.005,
+    "min_vif": 1.002,
+    "mean_vif": 1.00325,
+    "has_severe_multicollinearity": false
+  },
+  "split_info": {
+    "train_rows": 894365,
+    "test_rows": 223592,
+    "test_ratio": 0.2,
+    "random_state": 42
+  }
+}
